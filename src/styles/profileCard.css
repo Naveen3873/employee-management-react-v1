@@ -1,0 +1,116 @@
+/* src/styles/profileCard.css */
+
+/* Container for user list */
+.user-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow cards to wrap to the next line on smaller screens */
+    justify-content: center; /* Center cards horizontally */
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Profile Card Styles */
+.profile-card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px; /* Fixed width for each card */
+    margin-bottom: 20px;
+}
+
+.profile-details {
+    margin-bottom: 10px;
+}
+
+.profile-details h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.profile-details p {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.accept-button, .reject-button {
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.accept-button {
+    background-color: #28a745; /* Green */
+    color: white;
+}
+
+.accept-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.reject-button {
+    background-color: #dc3545; /* Red */
+    color: white;
+}
+
+.reject-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center pagination horizontally and vertically */
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #007bff; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0 5px;
+    padding: 8px 16px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Center align title */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Logout Button Styles */
+.logout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #dc3545; /* Red */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}

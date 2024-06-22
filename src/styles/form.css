@@ -1,0 +1,68 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust height as needed */
+}
+
+.form-container form {
+    width: 300px; /* Adjust form width as needed */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group button {
+    width: calc(100% - 20px); /* Adjust input and button width minus padding */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-top: 20px; /* Adjust margin as needed */
+}
+
+.primary-button {
+    width: 100%; /* Make the button span the full width of its container */
+    padding: 10px 20px; /* Adjust padding as needed */
+    font-size: 16px;
+    background-color: #007bff; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.primary-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.redirect-link {
+    align-self: flex-end; /* Aligns the link to the right */
+    margin-bottom: 10px; /* Adds space between link and form */
+    font-size: 14px;
+    color: #007bff; /* Adjust link color as needed */
+    text-decoration: none;
+}
