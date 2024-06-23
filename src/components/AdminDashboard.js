@@ -4,31 +4,46 @@ import axiosInstance from '../config/axiosInstance'; // Adjust path as per your 
 import ProfileCard from './ProfileCard';
 import '../styles/profileCard.css'; // Import your custom CSS for profile card and pagination styling
 import Swal from 'sweetalert2';
-import LogoutButton from './Auth/LogoutButton';
+import Navbar from './Navbar';
+import Loader from './Loader';
 
 const AdminDashboard = () => {
+    const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const countPerPage = 4; // Number of users per page
+    const countPerPage = 6; // Number of users per page
 
     useEffect(() => {
         fetchUsers(currentPage, countPerPage);
     }, [currentPage]); // Only re-fetch users when currentPage changes
 
     const fetchUsers = async (page, limit) => {
+        setLoading(true);
         try {
             const response = await axiosInstance.get(`/api/admin/users?page=${page}&limit=${limit}`);
             setUsers(response.data.users);
             setTotalPages(response.data.totalPages);
+            setLoading(false);
         } catch (error) {
+            // console.log(error.response);
+            if(error.response.status === 401) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Unauthorized',
+                    text: 'No Permission for access this page',
+                });
+            }
             console.error('Error fetching users:', error);
+            setLoading(false);
         }
     };
 
     const handleAccept = async (userId) => {
+        setLoading(true);
         try {
             await axiosInstance.put(`/api/admin/approve/${userId}`);
+            setLoading(false);
             Swal.fire({
                 icon: 'success',
                 title: 'Approved!',
@@ -36,8 +51,10 @@ const AdminDashboard = () => {
             });
             // setUsers(users.filter(user => user._id !== userId));
             fetchUsers(currentPage, countPerPage);
+
         } catch (error) {
             console.error('Error accepting user:', error);
+            setLoading(false);
         }
     };
 
@@ -49,7 +66,7 @@ const AdminDashboard = () => {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes, reject it!"
           }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
@@ -74,19 +91,22 @@ const AdminDashboard = () => {
 
     return (
         <div>
-            <h2>Admin Dashboard</h2>
-            {/* <button className="logout-button">Logout</button> */}
-            <LogoutButton className="logout-button" />
-            <div className="user-list">
-                {users.map(user => (
-                    <ProfileCard key={user._id} user={user} onAccept={handleAccept} onReject={handleReject} />
-                ))}
-            </div>
-            <div className="pagination">
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button key={index + 1} onClick={() => goToPage(index + 1)}>{index + 1}</button>
-                ))}
-            </div>
+            <Navbar />
+            {loading ? <Loader /> :
+            <div>
+                <h2 className="text-primary pt-2">Admin Dashboard</h2>
+                <div className="user-list">
+                    {users.map(user => (
+                        <ProfileCard key={user._id} user={user} onAccept={handleAccept} onReject={handleReject} />
+                    ))}
+                </div>
+                <div className="pagination">
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button key={index + 1} onClick={() => goToPage(index + 1)}>{index + 1}</button>
+                    ))}
+                </div>
+            </div> 
+            }
         </div>
     );
 };

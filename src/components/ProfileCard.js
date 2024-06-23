@@ -5,16 +5,20 @@ import '../styles/profileCard.css'; // Adjust path as per your project structure
 
 const ProfileCard = ({ user, onAccept, onReject }) => {
     const formatDate = (dateString) => {
-        const options = {
-            timeZone: 'Asia/Kolkata',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-        };
-        return new Date(dateString).toLocaleString('en-IN', options);
+        const date = new Date(dateString);
+    
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        let hours = date.getHours();
+        const ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        
+        const formattedDate = `${day}/${month}/${year} ${hours}:${minutes} ${ampm}`;
+        
+        return formattedDate;
     };
     
     return (
@@ -34,7 +38,9 @@ const ProfileCard = ({ user, onAccept, onReject }) => {
                     <button className="accept-button" onClick={() => onAccept(user._id)}>Accept</button>
                     <button className="reject-button" onClick={() => onReject(user._id)}>Reject</button>
                 </div>
-                : ''
+                : <div className="d-grid pt-1">
+                <button className="btn btn-primary" type="button">Approved</button>
+              </div>
                 }
             </div>
         </div>

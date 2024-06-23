@@ -1,11 +1,10 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axiosInstance from '../../config/axiosInstance'; // Adjust path as per your project structure
+import axiosInstance from '../../config/axiosInstance';
 import { Link,useNavigate } from 'react-router-dom';
-import '../../styles/form.css'; // Import your custom CSS for form styling
-import RedirectBasedOnRole from '../RedirectBasedOnRole'; // Import the new component
 import Swal from 'sweetalert2';
+import Navbar from '../Navbar';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -26,6 +25,7 @@ const LoginForm = () => {
             const { isAdmin, token } = response.data;
 
             if (isAdmin) {
+                localStorage.setItem('role', 'ADMIN');
                 navigate('/admin-dashboard');
             } else {
                 navigate('/user-dashboard');
@@ -45,33 +45,34 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="form-container">
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-                {({ isSubmitting }) => (
-                    <Form>
-                        <h2>Login</h2>
-                        <div className="form-group">
-                            <label htmlFor="email">Email:</label>
-                            <Field type="email" id="email" name="email" />
-                            <ErrorMessage name="email" component="div" className="error" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password:</label>
-                            <Field type="password" id="password" name="password" />
-                            <ErrorMessage name="password" component="div" className="error" />
-                        </div>
-                        <Link to="/signup" className="redirect-link">Create an account</Link>
-                        <div className="button-group">
-                            <button type="submit" className="primary-button" disabled={isSubmitting}>
-                                Login
-                            </button>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
-            {/* Render the RedirectBasedOnRole component */}
-            <RedirectBasedOnRole />
-        </div>
+        <>
+            <Navbar />
+            <div className="form-container">
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+                    {({ isSubmitting }) => (
+                        <Form>
+                            <h2>Login</h2>
+                            <div className="form-group">
+                                <label htmlFor="email">Email:</label>
+                                <Field type="email" id="email" name="email" />
+                                <ErrorMessage name="email" component="div" className="error" />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="password">Password:</label>
+                                <Field type="password" id="password" name="password" />
+                                <ErrorMessage name="password" component="div" className="error" />
+                            </div>
+                            <Link to="/signup" className="redirect-link">Create an account</Link>
+                            <div className="button-group">
+                                <button type="submit" className="primary-button" disabled={isSubmitting}>
+                                    Login
+                                </button>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
+        </>
     );
 };
 

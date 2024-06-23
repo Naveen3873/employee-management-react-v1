@@ -1,12 +1,13 @@
 // src/components/Auth/RegisterForm.js
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import '../../styles/form.css'; // Import your custom CSS for form styling
 import axios from '../../config/axiosInstance';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
+import Loader from '../Loader'; // Adjust path as necessary
 
 const initialValues = {
   name: '',
@@ -25,8 +26,11 @@ const validationSchema = Yup.object().shape({
 });
 
 const RegisterForm = () => {
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+        setLoading(true);
         try {
             // Example: Make API request to register user
             const response = await axios.post('/api/auth/register', values);
@@ -47,54 +51,59 @@ const RegisterForm = () => {
             });
         } finally {
             setSubmitting(false);
+            setLoading(false);
         }
     };
 
     return (
-        <div className="form-container"> {/* Use a container for responsive styling */}
-            <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-            >
-            {({ isSubmitting }) => (
-                <Form>
-                    <h2>Register</h2>
-                    <div className="form-group">
-                        <label htmlFor="name">Name:</label>
-                        <Field type="text" id="name" name="name" />
-                        <ErrorMessage name="name" component="div" className="error" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="phone">Phone Number:</label>
-                        <Field type="text" id="phone" name="phone" />
-                        <ErrorMessage name="phone" component="div" className="error" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="salary">Salary:</label>
-                        <Field type="number" id="salary" name="salary" />
-                        <ErrorMessage name="salary" component="div" className="error" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email:</label>
-                        <Field type="email" id="email" name="email" />
-                        <ErrorMessage name="email" component="div" className="error" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password:</label>
-                        <Field type="password" id="password" name="password" />
-                        <ErrorMessage name="password" component="div" className="error" />
-                    </div>
-                    <Link to="/" className="redirect-link">Already have an account</Link>
-                    <div className="button-group">
-                        <button type="submit" className="primary-button" disabled={isSubmitting}>
-                            Register
-                        </button>
-                    </div>
-                </Form>
-            )}
-            </Formik>
-        </div>
+        <>
+            <div className="form-container"> {/* Use a container for responsive styling */}
+            {loading ? <Loader /> :   
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
+                >
+                {({ isSubmitting }) => (
+                    <Form>
+                        <h2>Register</h2>
+                        <div className="form-group">
+                            <label htmlFor="name">Name:</label>
+                            <Field type="text" id="name" name="name" />
+                            <ErrorMessage name="name" component="div" className="error" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="phone">Phone Number:</label>
+                            <Field type="text" id="phone" name="phone" />
+                            <ErrorMessage name="phone" component="div" className="error" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="salary">Salary:</label>
+                            <Field type="number" id="salary" name="salary" />
+                            <ErrorMessage name="salary" component="div" className="error" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email">Email:</label>
+                            <Field type="email" id="email" name="email" />
+                            <ErrorMessage name="email" component="div" className="error" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password:</label>
+                            <Field type="password" id="password" name="password" />
+                            <ErrorMessage name="password" component="div" className="error" />
+                        </div>
+                        <Link to="/" className="redirect-link">Already have an account</Link>
+                        <div className="button-group">
+                            <button type="submit" className="primary-button" disabled={isSubmitting}>
+                                Register
+                            </button>
+                        </div>
+                    </Form>
+                )}
+                </Formik>
+            }
+            </div>
+        </>
     );
 };
 
