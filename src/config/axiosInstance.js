@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an instance of axios with a custom config
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8088', // Replace with your API base URL
+    baseURL: 'https://preprod-emp-manage.techyasylum.com/api', // Replace with your API base URL
     // timeout: 10000, // Timeout for API requests
     headers: {
         'Content-Type': 'application/json', // Default content type
