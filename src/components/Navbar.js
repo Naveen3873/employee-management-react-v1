@@ -22,7 +22,7 @@ const Navbar = () => {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/">EMP</Link>
+                    <Link className="navbar-brand" to="/">Techy Asylum EMP</Link>
                 </div>
             </nav>
         );
@@ -32,7 +32,7 @@ const Navbar = () => {
         <>
            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/">EMP</Link>
+                <Link className="navbar-brand" to="/">Techy Asylum EMP</Link>
                 <button
                     className="navbar-toggler"
                     type="button"
